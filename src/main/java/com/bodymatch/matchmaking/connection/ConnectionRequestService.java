@@ -46,9 +46,11 @@ public class ConnectionRequestService {
         if (!iamGateway.isAthlete(athleteId)) {
             throw new IllegalStateException("Requester is not an athlete");
         }
-        if (!membershipGateway.hasActiveMembership(athleteId)) {
-            throw new IllegalStateException("Athlete must have an active membership to request coaching");
-        }
+        // TODO: reactivar este chequeo antes de producción. Deshabilitado temporalmente
+        // para poder probar el flujo de matchmaking sin depender de una suscripción paga.
+        // if (!membershipGateway.hasActiveMembership(athleteId)) {
+        //     throw new IllegalStateException("Athlete must have an active membership to request coaching");
+        // }
         var coach = coachRepository.findByUserId(coachId)
                 .orElseThrow(() -> new IllegalArgumentException("Coach profile not found"));
         if (!coach.isAcceptingClients()) {
